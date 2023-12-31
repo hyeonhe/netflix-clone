@@ -2,6 +2,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { RecoilRoot } from "recoil";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { theme } from "./theme";
 
 const root = ReactDOM.createRoot(
@@ -66,20 +67,25 @@ font-family: 'Source Sans Pro', sans-serif;
     margin: 0;
     font-weight: 300;
     font-family: 'source Sans Pro', sans-serif;
-    background-color: ${(props) => props.theme.bgColor};
-    color: black;
+    color: ${(props) => props.theme.white.darker};
+    background-color: black;
   }
+  
   a{
     text-decoration: none;
     color:inherit;
   }
 `;
 
+const client = new QueryClient();
+
 root.render(
   <RecoilRoot>
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <App />
-    </ThemeProvider>
+    <QueryClientProvider client={client}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <App />
+      </ThemeProvider>
+    </QueryClientProvider>
   </RecoilRoot>
 );
