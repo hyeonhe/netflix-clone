@@ -9,6 +9,7 @@ import Banner from "../Components/Banner";
 import BigMovie from "../Components/BigMovie";
 import Overlay from "../Components/Overlay";
 import Info from "../Components/Info";
+import Box from "../Components/Box";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -35,42 +36,10 @@ const Row = styled(motion.div)`
   width: 100%;
 `;
 
-const Box = styled(motion.div)<{ bg_photo: string }>`
-  background-color: white;
-  height: 200px;
-  font-size: 30px;
-  background-image: url(${(props) => props.bg_photo});
-  background-size: cover;
-  background-position: center center;
-  cursor: pointer;
-
-  &:first-child {
-    transform-origin: center left;
-  }
-  &:last-child {
-    transform-origin: center right;
-  }
-`;
-
 const rowVariants = {
   hidden: { x: window.innerWidth + 5 },
   visible: { x: 0 },
   exit: { x: -window.innerWidth - 5 },
-};
-
-const boxVariants = {
-  normal: {
-    scale: 1,
-  },
-  hover: {
-    scale: 1.3,
-    y: -50,
-    transition: {
-      delay: 0.5,
-      duration: 0.1,
-      type: "tween",
-    },
-  },
 };
 
 const offset = 6;
@@ -139,14 +108,9 @@ function Home() {
                   .slice(offset * index, offset * index + offset)
                   .map((movie) => (
                     <Box
-                      layoutId={movie.id + ""}
-                      key={movie.id}
-                      whileHover="hover"
-                      initial="normal"
-                      variants={boxVariants}
-                      onClick={() => onBoxClicked(movie.id)}
-                      bg_photo={makeImagePath(movie.backdrop_path, "w500")}
-                      transition={{ type: "tween" }}
+                      movieId={movie.id}
+                      backdrop_path={movie.backdrop_path}
+                      onBoxClicked={() => onBoxClicked(movie.id)}
                     >
                       <Info title={movie.title} />
                     </Box>
