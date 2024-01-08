@@ -67,16 +67,6 @@ const Info = styled(motion.div)`
   }
 `;
 
-const Overlay = styled(motion.div)`
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  overflow-y: auto;
-`;
-
 const rowVariants = {
   hidden: { x: window.innerWidth + 5 },
   visible: { x: 0 },
@@ -194,13 +184,8 @@ function Home() {
           <AnimatePresence>
             {bigMovieMatch ? (
               <>
-                <Overlay
-                  onClick={onOverlayClick}
-                  exit={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                ></Overlay>
-
                 {clickedMovie && <BigMovie clickedMovie={clickedMovie} />}
+                <Overlay onClick={onOverlayClick} />
               </>
             ) : null}
           </AnimatePresence>
