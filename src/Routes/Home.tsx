@@ -14,6 +14,7 @@ import Box from "../Components/Box";
 const Wrapper = styled.div`
   background-color: black;
   overflow-x: hidden;
+  height: 100vh;
 `;
 
 const Loader = styled.div`

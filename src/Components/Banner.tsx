@@ -1,25 +1,30 @@
 import styled from "styled-components";
 
 const BannerWrapper = styled.div<{ bg_photo: string }>`
-  width: 100%;
-  height: 100vh;
+  width: 100vw;
+  height: 56.25vw;
+  padding: 2vh 2vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 60px;
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
     url(${(props) => props.bg_photo});
   background-size: cover;
+  background-position: center;
 `;
 
 const Title = styled.h2`
-  font-size: 68px;
-  margin-bottom: 20px;
+  font-size: 3vw;
+  margin-bottom: 1vh;
+  color: white;
 `;
 
 const Overview = styled.p`
-  font-size: 30px;
-  width: 50%;
+  font-size: 1.5vw;
+  width: 40%;
+  color: white;
+  line-height: 2vw;
+  word-break: keep-all;
 `;
 
 interface IBanner {
