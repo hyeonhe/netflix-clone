@@ -8,6 +8,7 @@ import { useNavigate, useMatch } from "react-router-dom";
 import Banner from "../Components/Banner";
 import BigMovie from "../Components/BigMovie";
 import Overlay from "../Components/Overlay";
+import Info from "../Components/Info";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -51,23 +52,6 @@ const Box = styled(motion.div)<{ bg_photo: string }>`
   }
 `;
 
-const Info = styled(motion.div)`
-  padding: 10px;
-  background-color: ${(props) => props.theme.black.lighter};
-  opacity: 0;
-  position: absolute;
-  width: 100%;
-  height: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  bottom: -80px;
-  h4 {
-    text-align: center;
-    font-size: 16px;
-  }
-`;
-
 const rowVariants = {
   hidden: { x: window.innerWidth + 5 },
   visible: { x: 0 },
@@ -89,16 +73,6 @@ const boxVariants = {
   },
 };
 
-const infoVariants = {
-  hover: {
-    opacity: 1,
-    transition: {
-      delay: 0.5,
-      duration: 0.1,
-      type: "tween",
-    },
-  },
-};
 const offset = 6;
 
 function Home() {
@@ -174,9 +148,7 @@ function Home() {
                       bg_photo={makeImagePath(movie.backdrop_path, "w500")}
                       transition={{ type: "tween" }}
                     >
-                      <Info variants={infoVariants}>
-                        <h4>{movie.title}</h4>
-                      </Info>
+                      <Info title={movie.title} />
                     </Box>
                   ))}
               </Row>
