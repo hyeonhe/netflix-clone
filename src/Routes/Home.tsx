@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate, useMatch } from "react-router-dom";
 import Banner from "../Components/Banner";
 import BigMovie from "../Components/BigMovie";
+import Overlay from "../Components/Overlay";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -184,8 +185,13 @@ function Home() {
           <AnimatePresence>
             {bigMovieMatch ? (
               <>
-                {clickedMovie && <BigMovie clickedMovie={clickedMovie} />}
                 <Overlay onClick={onOverlayClick} />
+                {clickedMovie && (
+                  <BigMovie
+                    clickedMovie={clickedMovie}
+                    layoutId={bigMovieMatch.params.movieId + ""} // movieId를 꼭 넘겨줘야 함
+                  />
+                )}
               </>
             ) : null}
           </AnimatePresence>

@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 import { IMovie } from "../api";
 import { makeImagePath } from "../utils";
-import { useMatch } from "react-router-dom";
 
 const BigMovieWrapper = styled(motion.div)`
   position: absolute;
@@ -37,11 +36,14 @@ const BigOverview = styled.p`
   line-height: 1.5;
 `;
 
-const BigMovie = ({ clickedMovie }: { clickedMovie: IMovie }) => {
-  const bigMovieMatch = useMatch("/movies/:movieId");
+interface IBigMovieProps {
+  clickedMovie: IMovie;
+  layoutId: string;
+}
 
+const BigMovie = ({ clickedMovie, layoutId }: IBigMovieProps) => {
   return (
-    <BigMovieWrapper layoutId={bigMovieMatch?.params.movieId}>
+    <BigMovieWrapper layoutId={layoutId}>
       {clickedMovie && (
         <>
           <BigCover
