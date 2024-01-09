@@ -1,5 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { IGetMoviesResult, getMovies, topLatedMovies } from "../api";
+import {
+  IGetMoviesResult,
+  getMovies,
+  topLatedMovies,
+  upcomingMovies,
+} from "../api";
 import { useState } from "react";
 import styled from "styled-components";
 import { makeImagePath } from "../utils";
@@ -49,6 +54,11 @@ function Home() {
       queryKey: ["topLated"],
       queryFn: topLatedMovies,
     });
+
+  const { data: upcomingMoives } = useQuery<IGetMoviesResult>({
+    queryKey: ["upcoming"],
+    queryFn: upcomingMovies,
+  });
 
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
@@ -100,6 +110,12 @@ function Home() {
               index={index}
               data={topLated!}
               title={"최고 평점 영화"}
+            />
+            <Slider
+              onBoxClicked={onBoxClicked}
+              index={index}
+              data={upcomingMoives!}
+              title={"개봉 예정 영화"}
             />
           </Sliders>
           <AnimatePresence>
