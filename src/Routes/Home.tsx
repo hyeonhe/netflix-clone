@@ -3,13 +3,12 @@ import { IGetMoviesResult, getMovies } from "../api";
 import { useState } from "react";
 import styled from "styled-components";
 import { makeImagePath } from "../utils";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { useNavigate, useMatch } from "react-router-dom";
 import Banner from "../Components/Banner";
 import BigMovie from "../Components/BigMovie";
 import Overlay from "../Components/Overlay";
-import Info from "../Components/Info";
-import Box from "../Components/Box";
+import Slider from "../Components/Slider";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -24,24 +23,13 @@ const Loader = styled.div`
   align-items: center;
 `;
 
-const Slider = styled.div`
+const Sliders = styled.div`
   position: relative;
   top: -100px;
+  display: flex;
+  flex-direction: column;
+  height: 1000px;
 `;
-
-const Row = styled(motion.div)`
-  display: grid;
-  gap: 5px;
-  grid-template-columns: repeat(6, 1fr);
-  position: absolute;
-  width: 100%;
-`;
-
-const rowVariants = {
-  hidden: { x: window.innerWidth + 5 },
-  visible: { x: 0 },
-  exit: { x: -window.innerWidth - 5 },
-};
 
 const offset = 6;
 
@@ -94,31 +82,14 @@ function Home() {
             overview={data?.results[0].overview || ""}
           />
 
-          <Slider>
-            <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
-              <Row
-                variants={rowVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                transition={{ type: "tween", duration: 1 }}
-                key={index}
-              >
-                {data?.results
-                  .slice(1)
-                  .slice(offset * index, offset * index + offset)
-                  .map((movie) => (
-                    <Box
-                      movieId={movie.id}
-                      backdrop_path={movie.backdrop_path}
-                      onBoxClicked={() => onBoxClicked(movie.id)}
-                    >
-                      <Info title={movie.title} />
-                    </Box>
-                  ))}
-              </Row>
-            </AnimatePresence>
-          </Slider>
+          <Sliders>
+            <Slider
+              onBoxClicked={onBoxClicked}
+              index={index}
+              data={data!}
+              title={"시청 중인 영화"}
+            />
+          </Sliders>
           <AnimatePresence>
             {bigMovieMatch ? (
               <>
