@@ -1,6 +1,9 @@
 import { makeImagePath } from "../utils";
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import { movieState } from "../atom";
+import { useSetRecoilState } from "recoil";
+import { IMovie } from "../api";
 
 const BoxDiv = styled(motion.div)<{ bg_photo: string }>`
   background-color: white;
@@ -35,22 +38,26 @@ const boxVariants = {
 };
 
 interface IBoxProps {
-  movieId: number;
-  backdrop_path: string;
   onBoxClicked: (movieId: number) => void;
   children: React.ReactNode;
+  data: IMovie;
 }
 
-const Box = ({ movieId, backdrop_path, onBoxClicked, children }: IBoxProps) => {
+const Box = ({ onBoxClicked, children, data }: IBoxProps) => {
+  const setMovieId = useSetRecoilState(movieState);
+
   return (
     <BoxDiv
-      layoutId={movieId + ""}
-      key={movieId}
+      layoutId={data.id + ""}
+      key={data.id}
       whileHover="hover"
       initial="normal"
       variants={boxVariants}
-      onClick={() => onBoxClicked(movieId)}
-      bg_photo={makeImagePath(backdrop_path, "w500")}
+      onClick={() => {
+        onBoxClicked(data.id);
+        setMovieId(data);
+      }}
+      bg_photo={makeImagePath(data.backdrop_path, "w500")}
       transition={{ type: "tween" }}
     >
       {children}

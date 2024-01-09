@@ -25,3 +25,9 @@ export function getMovies() {
     `${BASE_PATH}/movie/now_playing?language=ko-KR&region=KR&api_key=${API_KEY}`
   ).then((response) => response.json());
 }
+
+export function topLatedMovies() {
+  return fetch(
+    `${BASE_PATH}/movie/top_rated?language=ko-KR&page=1&region=KR&api_key=${API_KEY}`
+  ).then((response) => response.json());
+}

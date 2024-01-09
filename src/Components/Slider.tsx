@@ -34,10 +34,9 @@ const Slider = ({ onBoxClicked, index, data, title }: ISliderProps) => {
             .slice(offset * index, offset * index + offset)
             .map((movie) => (
               <Box
-                movieId={movie.id}
-                backdrop_path={movie.backdrop_path}
                 onBoxClicked={() => onBoxClicked(movie.id)}
                 key={movie.id}
+                data={movie}
               >
                 <Info title={movie.title} />
               </Box>
