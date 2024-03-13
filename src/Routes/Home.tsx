@@ -20,7 +20,7 @@ import { movieState } from "../atom";
 const Wrapper = styled.div`
   background-color: black;
   overflow-x: hidden;
-  height: 100vh;
+  height: 100%;
 `;
 
 const Loader = styled.div`
@@ -49,30 +49,18 @@ function Home() {
     queryFn: getMovies,
   });
 
-  const { data: topLated, isLoading: isTopLatedLoading } =
-    useQuery<IGetMoviesResult>({
-      queryKey: ["topLated"],
-      queryFn: topLatedMovies,
-    });
+  const { data: topLated } = useQuery<IGetMoviesResult>({
+    queryKey: ["topLated"],
+    queryFn: topLatedMovies,
+  });
 
   const { data: upcomingMoives } = useQuery<IGetMoviesResult>({
     queryKey: ["upcoming"],
     queryFn: upcomingMovies,
   });
 
-  const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const selectedMovie = useRecoilValue(movieState);
-
-  const increaseIndex = () => {
-    if (data) {
-      if (leaving) return;
-      toggleLeaving();
-      const totalMovies = data.results.length - 1;
-      const maxIndex = Math.floor(totalMovies / offset) - 1;
-      setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
-    }
-  };
 
   const toggleLeaving = () => setLeaving((prev) => !prev);
 
@@ -99,25 +87,20 @@ function Home() {
           />
 
           <Sliders>
-            <Slider
-              onBoxClicked={onBoxClicked}
-              index={index}
-              data={data!}
-              title={"시청 중인 영화"}
-            />
-            <Slider
-              onBoxClicked={onBoxClicked}
-              index={index}
-              data={topLated!}
-              title={"최고 평점 영화"}
-            />
-            <Slider
-              onBoxClicked={onBoxClicked}
-              index={index}
-              data={upcomingMoives!}
-              title={"개봉 예정 영화"}
-            />
+            {[
+              { data: data!, title: "시청 중인 영화" },
+              { data: topLated!, title: "최고 평점 영화" },
+              { data: upcomingMoives!, title: "개봉 예정 영화" },
+            ].map((sliderData, index) => (
+              <Slider
+                key={index}
+                onBoxClicked={onBoxClicked}
+                data={sliderData.data}
+                title={sliderData.title}
+              />
+            ))}
           </Sliders>
+
           <AnimatePresence>
             {bigMovieMatch ? (
               <>

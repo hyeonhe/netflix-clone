@@ -13,17 +13,27 @@ const Title = styled.span`
 
 interface ISliderProps {
   onBoxClicked: (movieId: number) => void;
-  index: number;
+
   data: IGetMoviesResult;
   title: string;
 }
 
 const offset = 6;
 
-const Slider = ({ onBoxClicked, index, data, title }: ISliderProps) => {
+const Slider = ({ onBoxClicked, data, title }: ISliderProps) => {
+  const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const toggleLeaving = () => setLeaving((prev) => !prev);
 
+  const increaseIndex = () => {
+    if (data) {
+      if (leaving) return;
+      toggleLeaving();
+      const totalMovies = data.results.length - 1;
+      const maxIndex = Math.floor(totalMovies / offset) - 1;
+      setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
+    }
+  };
   return (
     <>
       <Title>{title}</Title>
