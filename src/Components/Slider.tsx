@@ -47,6 +47,7 @@ const Slider = ({ onBoxClicked, data, title }: ISliderProps) => {
                 onBoxClicked={() => onBoxClicked(movie.id)}
                 key={movie.id}
                 data={movie}
+                title={title}
               >
                 <Info title={movie.title} />
               </Box>

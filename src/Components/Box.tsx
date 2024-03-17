@@ -13,6 +13,7 @@ const BoxDiv = styled(motion.div)<{ bg_photo: string }>`
   background-size: cover;
   background-position: center center;
   cursor: pointer;
+  position: relative;
 
   &:first-child {
     transform-origin: center left;
@@ -29,6 +30,7 @@ const boxVariants = {
   hover: {
     scale: 1.3,
     y: -50,
+    zIndex: 2,
     transition: {
       delay: 0.5,
       duration: 0.1,
@@ -41,14 +43,15 @@ interface IBoxProps {
   onBoxClicked: (movieId: number) => void;
   children: React.ReactNode;
   data: IMovie;
+  title: string;
 }
 
-const Box = ({ onBoxClicked, children, data }: IBoxProps) => {
+const Box = ({ onBoxClicked, children, data, title }: IBoxProps) => {
   const setMovieId = useSetRecoilState(movieState);
 
   return (
     <BoxDiv
-      layoutId={data.id + ""}
+      layoutId={title + String(data.id)}
       key={data.id}
       whileHover="hover"
       initial="normal"
