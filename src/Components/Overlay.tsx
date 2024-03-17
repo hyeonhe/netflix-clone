@@ -13,6 +13,7 @@ const OverlayWrapper = styled(motion.div)`
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 0;
   overflow-y: auto;
+  z-index: 2;
 `;
 
 const Overlay: React.FC<OverlayProps> = ({ onClick }) => {

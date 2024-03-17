@@ -16,6 +16,7 @@ const BigMovieWrapper = styled(motion.div)`
   border-radius: 15px;
   overflow: hidden;
   background-color: ${(props) => props.theme.black.darker};
+  z-index: 2;
 `;
 
 const BigCover = styled.img`
